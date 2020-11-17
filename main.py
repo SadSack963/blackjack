@@ -2,8 +2,10 @@ deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 import random
 
 # Start
+play = True
+# while play:
 if input("Do you want to play a game of Blackjack? (Y)/N" ).lower() == "n":
-    quit()
+    play = False
 
 # Initialize the hands
 cards = {
@@ -24,9 +26,9 @@ for i in range(0,2):
     cards["Dealer"]["hand"].append(card)
     cards["Dealer"]["score"] += card
 
-# Display hands to the player
+# Display initial hands to the player
 print(f'Your hand:   {cards["Player"]["hand"]}, score: {cards["Player"]["score"]}')
-print(f'Dealer hand: [{cards["Dealer"]["hand"][0]}, _]')
+print(f'Dealer hand: [{cards["Dealer"]["hand"][0]}, _ ]')
 
 # Check for Blackjack
 if cards["Player"]["score"] == 21:
@@ -36,7 +38,14 @@ if cards["Player"]["score"] == 21:
         print("You win! You have Blackjack.")
     print(f'Your hand:   {cards["Player"]["hand"]}, score: {cards["Player"]["score"]}')
     print(f'Dealer hand: {cards["Dealer"]["hand"]}, score: {cards["Dealer"]["score"]}')
+    play = 0
 
-
+# Another card for Player
+new_card = input("Do you want another card? Y/(N) ").lower()
+if new_card == "y":
+    card = random.choice(deck)
+    cards["Player"]["hand"].append(card)
+    cards["Player"]["score"] += card
+    print(f'Your hand:   {cards["Player"]["hand"]}, score: {cards["Player"]["score"]}')
 
 
