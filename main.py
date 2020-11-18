@@ -80,7 +80,7 @@ def check_blackjack():
 
 # New Dealer cards
 def new_card_dealer():
-    while cards["Dealer"]["score"] < 16:
+    while cards["Dealer"]["score"] < 17:
         card = random.choice(deck)
         cards["Dealer"]["hand"].append(card)
         cards["Dealer"]["score"] += card
