@@ -1,5 +1,7 @@
-deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 import random
+from art import logo
+
+deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 play = True
 cards = {}
 
@@ -12,10 +14,11 @@ def init_hands():
         "Dealer": {"hand": [], "score": 0},
         }
 
+
 # Deal the initial cards
 def init_deal():
     # Deal initial cards (dealt cards are not removed from the deck)
-    for i in range(0,2):
+    for i in range(0, 2):
         card = random.choice(deck)
         cards["Player"]["hand"].append(card)
         cards["Player"]["score"] += card
@@ -45,7 +48,7 @@ def new_card_player():
             while bust:
                 for _ in cards["Player"]["hand"]:
                     if cards["Player"]["hand"][i] == 11:
-                        cards["Player"]["hand"][i] == 1
+                        cards["Player"]["hand"][i] = 1
                         cards["Player"]["score"] -= 10
                         bust = False
                         new_card_player()
@@ -56,6 +59,7 @@ def new_card_player():
                 new_card_player()
         else:
             new_card_player()
+
 
 # Check for Blackjack
 def check_blackjack():
@@ -68,6 +72,7 @@ def check_blackjack():
         print(f'Dealer hand: {cards["Dealer"]["hand"]}, score: {cards["Dealer"]["score"]}')
         global play
         play = False
+
 
 # New Dealer cards
 def new_card_dealer():
@@ -85,13 +90,14 @@ def new_card_dealer():
             while bust:
                 for _ in cards["Dealer"]["hand"]:
                     if cards["Dealer"]["hand"][i] == 11:
-                        cards["Dealer"]["hand"][i] == 1
+                        cards["Dealer"]["hand"][i] = 1
                         cards["Dealer"]["score"] -= 10
                         bust = False
                         new_card_dealer()
                     i += 1
             if bust:
                 print(f'You Win! Dealer bust with a score of {cards["Dealer"]["score"]}')
+
 
 # Compare scores to decide winner
 def decide_winner():
@@ -106,16 +112,16 @@ def decide_winner():
     global play
     play = False
 
+
 # ---------------------------------------------
 
 # Start Game
 while play:
-    if input("Do you want to play a game of Blackjack? (Y)/N" ).lower() == "n":
+    if input("Do you want to play a game of Blackjack? (Y)/N ").lower() == "n":
         play = False
         continue
 
     # Print logo
-    from art import logo
     print(logo)
 
     init_hands()
@@ -124,5 +130,3 @@ while play:
     new_card_player()
     new_card_dealer()
     decide_winner()
-
-
