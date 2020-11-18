@@ -1,9 +1,11 @@
 import random
 from art import logo
 
+# Initialize variables
 deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 play = True
 cards = {}
+game = False
 
 
 # Initialize the hands
@@ -45,7 +47,7 @@ def new_card_player():
         if cards["Player"]["score"] > 21: 
             bust = True
             i = 0
-            while bust:
+            while bust and i < len(cards["Player"]["hand"]):
                 for _ in cards["Player"]["hand"]:
                     if cards["Player"]["hand"][i] == 11:
                         cards["Player"]["hand"][i] = 1
@@ -55,6 +57,8 @@ def new_card_player():
                     i += 1
             if bust:
                 print(f'You Lose! You bust with a score of {cards["Player"]["score"]}')
+                global game
+                game = False
             else:
                 new_card_player()
         else:
@@ -70,8 +74,8 @@ def check_blackjack():
             print("You win! You have Blackjack.")
         print(f'Your hand:   {cards["Player"]["hand"]}, score: {cards["Player"]["score"]}')
         print(f'Dealer hand: {cards["Dealer"]["hand"]}, score: {cards["Dealer"]["score"]}')
-        global play
-        play = False
+        global game
+        game = False
 
 
 # New Dealer cards
@@ -87,7 +91,7 @@ def new_card_dealer():
         if cards["Dealer"]["score"] > 21: 
             bust = True
             i = 0
-            while bust:
+            while bust and i < len(cards["Dealer"]["hand"]):
                 for _ in cards["Dealer"]["hand"]:
                     if cards["Dealer"]["hand"][i] == 11:
                         cards["Dealer"]["hand"][i] = 1
@@ -97,6 +101,8 @@ def new_card_dealer():
                     i += 1
             if bust:
                 print(f'You Win! Dealer bust with a score of {cards["Dealer"]["score"]}')
+                global game
+                game = False
 
 
 # Compare scores to decide winner
@@ -109,8 +115,8 @@ def decide_winner():
         print("You Win!")
     print(f'Your hand:   {cards["Player"]["hand"]}, score: {cards["Player"]["score"]}')
     print(f'Dealer hand: {cards["Dealer"]["hand"]}, score: {cards["Dealer"]["score"]}')
-    global play
-    play = False
+    global game
+    game = False
 
 
 # ---------------------------------------------
@@ -120,6 +126,8 @@ while play:
     if input("Do you want to play a game of Blackjack? (Y)/N ").lower() == "n":
         play = False
         continue
+    else:
+        game = True
 
     # Print logo
     print(logo)
@@ -127,6 +135,9 @@ while play:
     init_hands()
     init_deal()
     check_blackjack()
-    new_card_player()
-    new_card_dealer()
-    decide_winner()
+    if game:
+        new_card_player()
+    if game:
+        new_card_dealer()
+    if game:
+        decide_winner()
